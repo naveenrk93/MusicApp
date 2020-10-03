@@ -25,8 +25,8 @@ class WelcomePage extends Component {
             <div>{/*<h1>Welcome {this.props.match.params.name}</h1>*/}
                 <nav className="navbar justify-content-center navbar-dark bg-primary">
                     <div className="navbar-brand">
-                        <button onClick={() => {this.setState({showSongList: true, showPlayList: false})}}><b>All Songs</b></button> &nbsp;
-                        <button onClick={() => {this.setState({showSongList: false, showPlayList: true})}}><b>Playlist</b></button></div></nav>
+                        <button className="buttontab" onClick={() => {this.setState({showSongList: true, showPlayList: false})}}><b>All Songs</b></button> &nbsp;
+                        <button className="buttontab" onClick={() => {this.setState({showSongList: false, showPlayList: true})}}><b>Playlist</b></button></div></nav>
                 {this.renderHelper()}
             </div>
         );
@@ -78,7 +78,6 @@ class SongsList extends Component {
 class Playlist extends Component {
     constructor() {
         super()
-
     }
     render() {
         return (
