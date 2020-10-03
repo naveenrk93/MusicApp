@@ -14,11 +14,11 @@ class MusicApp extends Component{
             <Router>
                 <HeaderComponent/>
                 <Switch>
-                <Route path = "/login" component = {LoginComponent}/>
-                <Route path = "/" exact component = {LoginComponent}/>
-                <AuthenticatedRoute path = "/welcome" component = {WelcomePage}/>
-                <Route path = "/logout" component = {LogoutComponent}/>
-                <Route  component = {ErrorComponent}/>
+                    <Route path = "/login" component = {LoginComponent}/>
+                    <Route path = "/" exact component = {LoginComponent}/>
+                    <AuthenticatedRoute path = "/welcome" component = {WelcomePage}/>
+                    <Route path = "/logout" component = {LogoutComponent}/>
+                    <Route  component = {ErrorComponent}/>
                 </Switch>
              </Router>
         );

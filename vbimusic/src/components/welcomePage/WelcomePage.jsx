@@ -4,15 +4,30 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 // Welcome page
 class WelcomePage extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            showSongList: true,
+            showPlayList: false
+        }
+    }
+
+    renderHelper(){
+        if(this.state.showSongList == true)
+            return <SongsList />
+        else if(this.state.showPlayList == true)
+            return <Playlist />
+    }
+
     render() {
         return (
             <div>{/*<h1>Welcome {this.props.match.params.name}</h1>*/}
                 <nav className="navbar justify-content-center navbar-dark bg-primary">
                     <div className="navbar-brand">
-                        <button onClick={this.allSongs}><b>All Songs</b></button> &nbsp;
-                        <button onClick={this.allPlaylist}><b>Playlist</b></button></div></nav>
-                       <SongsList />
-                         <Playlist />
+                        <button onClick={() => {this.setState({showSongList: true, showPlayList: false})}}><b>All Songs</b></button> &nbsp;
+                        <button onClick={() => {this.setState({showSongList: false, showPlayList: true})}}><b>Playlist</b></button></div></nav>
+                {this.renderHelper()}
             </div>
         );
     }
@@ -54,7 +69,6 @@ class SongsList extends Component {
                             }
                         </tbody>
                     </table>
-
                 </div>
             </div>
         );
@@ -69,8 +83,6 @@ class Playlist extends Component {
     render() {
         return (
             <div className="container">
-
-
                 <table className="table" >
                     <thead>
                         <tr>
