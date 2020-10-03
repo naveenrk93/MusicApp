@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import {Link} from 'react-router-dom'
 import AuthenticationService from '../musicApp/AuthenticationService';
 
 class HeaderComponent extends Component{
@@ -17,7 +18,7 @@ class HeaderComponent extends Component{
             <ul className = "navbar-nav">
                 
                 {isUserLoggedIn && <li className = "navbar-nav-link"><Link to="/logout" onClick={AuthenticationService.logOut}>Logout</Link></li>}
-                {!isUserLoggedIn && <li className = "navbar-nav-link"><Link to="/login" onClick={AuthenticationService.logOut}>Login</Link></li>}
+                {!isUserLoggedIn && <li className = "navbar-nav-link"><Link to="/login" onClick={AuthenticationService.isUserLoggedIn}>Login</Link></li>}
                     
             </ul>
             </nav>
@@ -26,4 +27,4 @@ class HeaderComponent extends Component{
     }
 }
 
-export default HeaderComponent;
+export default withRouter(HeaderComponent);
