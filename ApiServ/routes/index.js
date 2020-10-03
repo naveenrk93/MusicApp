@@ -20,11 +20,21 @@ router.post('/api/v1/playlist', function(req, res, next){
     res.status(500).json({message: "playlistname is not specified"});
   var playlist_name = req.body.playlist_name;
 
-  var sql = "INSERT INTO user_playlists (name, userid) values ('"+playlist_name+"', "+user_id+")";
-
-  con.query(sql, function (err, result, fields) {
+  var sql1 = "SELECT count(*) FROM user_playlists WHERE userid = "+user_id+" AND name = '"+playlist_name+"'";
+  con.query(sql1, function (err, result, fields) {
     if (err) throw err;
-    return res.json(result);
+    console.log(result[0]["count(*)"]);
+
+    if(result[0]["count(*)"] != 0)
+      return res.status(500).json({message: "playlist name already exists"})
+    else{
+      var sql = "INSERT INTO user_playlists (name, userid) values ('"+playlist_name+"', "+user_id+")";
+
+      con.query(sql, function (err, result, fields) {
+        if (err) throw err;
+        return res.json(result);
+      });
+    }
   });
 
 })
@@ -33,8 +43,13 @@ router.post('/api/v1/playlist/:playlistid', function(req, res, next){
 
   if(!req.body.playlist)
     return res.json({});
+  
 
   var sql = "INSERT INTO user_playlists (name, userid) values ('"+playlist_name+"', "+user_id+")";
+  con.query(sql, function (err, result, fields) {
+    if (err) throw err;
+    return res.json(result);
+  });
 
 })
 
