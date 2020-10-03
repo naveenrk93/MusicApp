@@ -39,17 +39,42 @@ router.post('/api/v1/playlist', function(req, res, next){
 
 })
 
-router.post('/api/v1/playlist/:playlistid', function(req, res, next){
-
-  if(!req.body.playlist)
-    return res.json({});
-  
-
-  var sql = "INSERT INTO user_playlists (name, userid) values ('"+playlist_name+"', "+user_id+")";
+router.get('/api/v1/user/:userId/playlists/', function(req, res, next){
+  var sql = "SELECT * FROM user_playlists WHERE userid = "+req.params.userId;
   con.query(sql, function (err, result, fields) {
     if (err) throw err;
     return res.json(result);
   });
+})
+
+router.post('/api/v1/playlist/:playlistid', function(req, res, next){
+
+  if(!req.body.songId)
+    return res.status(500).json({message: "no song is specified"});
+
+  if(!req.body.action)
+    return res.status(500).json({message: "no action is specified"});
+
+  if(req.body.action == "ADD_SONG")
+  {
+    var sql = "INSERT INTO playlist_songs (playlist_id, song_id) values ('"+req.params.playlistid+"', "+req.body.songId+")";
+    con.query(sql, function (err, result, fields) {
+      if (err) throw err;
+      return res.status(200).json(result);
+    });
+  }
+  else if (req.body.action == "DELETE_SONG")
+  {
+    var sql = "DELETE FROM playlist_songs WHERE playlist_id = "+req.params.playlistid+" AND song_id = "+req.body.songId;
+    con.query(sql, function (err, result, fields) {
+      if (err) throw err;
+      return res.status(200).json(result);
+    });
+  }
+  else{
+    return res.status(500).json({message: "unknown action"});
+  }
+
 
 })
 
